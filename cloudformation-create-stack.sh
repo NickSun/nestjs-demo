@@ -35,3 +35,6 @@ aws cloudformation create-stack \
   --capabilities CAPABILITY_NAMED_IAM \
   --parameters "ParameterKey=ImageUrl, ParameterValue=${AWS_ECR_REPOSITORY_DOMAIN_URI}/nestjs-demo:latest"
 aws cloudformation wait stack-create-complete --stack-name nestjs-demo-service
+
+echo -e "${GREEN}Public URL:${RESET}"
+aws cloudformation list-exports | grep 'elb.amazonaws.com' | cut -d '"' -f4
