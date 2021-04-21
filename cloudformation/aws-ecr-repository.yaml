@@ -1,0 +1,12 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: ECR Repository
+Resources:
+  AWSNestJsDemoRepository:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: "nestjs-demo"
+Outputs:
+  AWSNestJsDemoRepositoryArn:
+    Value: !GetAtt AWSNestJsDemoRepository.Arn
+    Export:
+      Name: AWSNestJsDemoRepositoryArn

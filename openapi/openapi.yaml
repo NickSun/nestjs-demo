@@ -1,0 +1,103 @@
+openapi: 3.0.0
+info:
+  title: Github User Repositories
+  description: Show github user repositories information
+  version: 0.0.1
+servers:
+  - url: /api/v1
+    description: API over HTTP
+externalDocs:
+  description: OpenAPI Specification
+  url: https://swagger.io/specification/
+tags:
+  - name: user
+    description: Operations about user
+paths:
+  /users/{username}/repos:
+    get:
+      tags:
+        - user
+      summary: Get user repositories
+      description: Returns user repositories information
+      operationId: getUserRepositories
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Repository'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        406:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalErrorResponse'
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: integer
+          format: int32
+        message:
+          type: string
+    InternalErrorResponse:
+      type: object
+      required:
+        - status
+        - message
+      properties:
+        statusCode:
+          type: integer
+          format: int32
+        message:
+          type: string
+    Branch:
+      type: object
+      required:
+        - name
+        - sha
+      properties:
+        name:
+          type: string
+        sha:
+          type: string
+    Repository:
+      type: object
+      required:
+        - name
+        - ownerLogin
+      properties:
+        name:
+          type: string
+        ownerLogin:
+          type: string
+        branches:
+          type: array
+          items:
+            $ref: '#/components/schemas/Branch'
