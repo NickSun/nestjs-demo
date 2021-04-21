@@ -40,7 +40,7 @@ $ npm run test:e2e:cov
 
 ## Deploy
 
-You have to set proper value for `ECR_REPOSITORY_DOMAIN_URI` variable in the `.env` file before deploy.
+You have to set proper value for the `AWS_REGION` and for the `AWS_ECR_REPOSITORY_DOMAIN_URI` variable in the `.env` file before deploy.
 After that run:
 ```bash
 $ ./cloudformation-create-stack.sh
