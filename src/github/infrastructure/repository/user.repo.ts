@@ -7,7 +7,7 @@ import { User } from '../../domain/aggregate_root/user';
 export class UserRepo implements IUserRepo {
   public constructor(private githubApiClient: GithubApiClient) {}
 
-  async getUser(username: string): Promise<User> {
+  public async getUser(username: string): Promise<User> {
     const user = await this.githubApiClient.getUser(username);
 
     const repos = await this.githubApiClient.getNotForkRepos(user);

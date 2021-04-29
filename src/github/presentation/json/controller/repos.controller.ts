@@ -9,7 +9,7 @@ export class ReposController {
 
   @Get('/v1/users/:username/repos')
   @UseFilters(UserNotFoundExceptionFilter)
-  async findAll(@Param('username') username: string) {
-    return await this.queryBus.execute(new UserReposQuery(username));
+  findAll(@Param('username') username: string) {
+    return this.queryBus.execute(new UserReposQuery(username));
   }
 }

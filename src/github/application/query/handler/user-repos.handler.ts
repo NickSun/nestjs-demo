@@ -7,7 +7,7 @@ import { IUserRepo } from '../../../domain/repository/iuser.repo';
 export class UserReposHandler implements IQueryHandler<UserReposQuery, Repository[]> {
   public constructor(private userRepo: IUserRepo) {}
 
-  public async execute(query: UserReposQuery): Promise<Repository[]> {
-    return await this.userRepo.getUser(query.username).then((user) => user.getRepos());
+  public execute(query: UserReposQuery): Promise<Repository[]> {
+    return this.userRepo.getUser(query.username).then((user) => user.getRepos());
   }
 }

@@ -26,8 +26,8 @@ export class GithubApiClient {
 
   public constructor(private httpService: HttpService) {}
 
-  public async getUser(username: string): Promise<User> {
-    return await this.httpService
+  public getUser(username: string): Promise<User> {
+    return this.httpService
       .get<GitUser>(this.endpoints.getUser(username), {
         headers: this.headers,
       })
@@ -45,12 +45,12 @@ export class GithubApiClient {
       });
   }
 
-  public async getNotForkRepos(user: User): Promise<Repository[]> {
+  public getNotForkRepos(user: User): Promise<Repository[]> {
     const endpoint = user.isOrganization()
       ? this.endpoints.getOrganizationReposList(user.getLogin())
       : this.endpoints.getUserReposList(user.getLogin());
 
-    return await this.httpService
+    return this.httpService
       .get<GitRepository[]>(endpoint, {
         headers: this.headers,
       })
@@ -62,8 +62,8 @@ export class GithubApiClient {
       .toPromise();
   }
 
-  public async getBranches(user: User, repo: Repository): Promise<Branch[]> {
-    return await this.httpService
+  public getBranches(user: User, repo: Repository): Promise<Branch[]> {
+    return this.httpService
       .get<GitBranch[]>(this.endpoints.getBranches(user.getLogin(), repo.getName()), {
         headers: this.headers,
       })
