@@ -1,8 +1,9 @@
 import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
 import { HttpService, INestApplication, ValidationPipe } from '@nestjs/common';
-import { GithubModule } from '../../src/github/infrastructure/github.module';
 import { of, throwError } from 'rxjs';
+import { AxiosError } from 'axios';
+import { GithubModule } from '../../src/github/infrastructure/github.module';
 
 describe('Get github user repositories', () => {
   let app: INestApplication;
@@ -32,7 +33,7 @@ describe('Get github user repositories', () => {
   });
 
   it('check 404 Not Found response', () => {
-    const err = {
+    const err: Partial<AxiosError> = {
       response: {
         status: 404,
         statusText: 'Not Found',
@@ -40,6 +41,8 @@ describe('Get github user repositories', () => {
           message: 'Not Found',
           documentation_url: 'https://docs.github.com/rest/reference/users#get-a-user',
         },
+        headers: {},
+        config: {},
       },
     };
     httpService.get = jest.fn().mockImplementationOnce(() => throwError(err));
