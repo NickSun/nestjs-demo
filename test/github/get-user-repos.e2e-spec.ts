@@ -72,14 +72,14 @@ describe('Get github user repositories', () => {
       headers: {},
       config: {},
     };
-    const userGitHubResponse = {
+    const userGitHubResponse: AxiosResponse<GitUser> = {
       data: {
         login: 'john',
         type: UserTypeEnum.User,
       },
       ...defaultResponseFields,
     };
-    const repositoryGitHubResponse = {
+    const repositoryGitHubResponse: AxiosResponse<GitRepository[]> = {
       data: [
         {
           name: 'nest-js-test',
@@ -98,7 +98,7 @@ describe('Get github user repositories', () => {
       ],
       ...defaultResponseFields,
     };
-    const branchGitHubResponse = {
+    const branchGitHubResponse: AxiosResponse<GitBranch[]> = {
       data: [
         {
           name: 'master',
@@ -124,9 +124,41 @@ describe('Get github user repositories', () => {
 
     jest
       .spyOn(httpService, 'get')
-      .mockImplementationOnce(() => of<AxiosResponse<GitUser>>(userGitHubResponse))
-      .mockImplementationOnce(() => of<AxiosResponse<GitRepository[]>>(repositoryGitHubResponse))
-      .mockImplementationOnce(() => of<AxiosResponse<GitBranch[]>>(branchGitHubResponse));
+      .mockImplementationOnce(() => of(userGitHubResponse))
+      .mockImplementationOnce(() => of(repositoryGitHubResponse))
+      .mockImplementationOnce(() => of(branchGitHubResponse));
+
+    return request(app.getHttpServer())
+      .get('/api/v1/users/john/repos')
+      .set('Accept', 'application/json')
+      .expect(200)
+      .expect(response);
+  });
+
+  it('check empty response for user', () => {
+    const defaultResponseFields = {
+      status: 200,
+      statusText: 'OK',
+      headers: {},
+      config: {},
+    };
+    const userGitHubResponse: AxiosResponse<GitUser> = {
+      data: {
+        login: 'john',
+        type: UserTypeEnum.User,
+      },
+      ...defaultResponseFields,
+    };
+    const repositoryGitHubResponse: AxiosResponse<GitRepository[]> = {
+      data: [],
+      ...defaultResponseFields,
+    };
+    const response = [];
+
+    jest
+      .spyOn(httpService, 'get')
+      .mockImplementationOnce(() => of(userGitHubResponse))
+      .mockImplementationOnce(() => of(repositoryGitHubResponse));
 
     return request(app.getHttpServer())
       .get('/api/v1/users/john/repos')
@@ -142,14 +174,14 @@ describe('Get github user repositories', () => {
       headers: {},
       config: {},
     };
-    const organizationGitHubResponse = {
+    const organizationGitHubResponse: AxiosResponse<GitUser> = {
       data: {
         login: 'nestjs',
         type: UserTypeEnum.Organization,
       },
       ...defaultResponseFields,
     };
-    const repositoryGitHubResponse = {
+    const repositoryGitHubResponse: AxiosResponse<GitRepository[]> = {
       data: [
         {
           name: 'nest-cli',
@@ -161,7 +193,7 @@ describe('Get github user repositories', () => {
       ],
       ...defaultResponseFields,
     };
-    const branchGitHubResponse = {
+    const branchGitHubResponse: AxiosResponse<GitBranch[]> = {
       data: [
         {
           name: 'master',
@@ -187,9 +219,9 @@ describe('Get github user repositories', () => {
 
     jest
       .spyOn(httpService, 'get')
-      .mockImplementationOnce(() => of<AxiosResponse<GitUser>>(organizationGitHubResponse))
-      .mockImplementationOnce(() => of<AxiosResponse<GitRepository[]>>(repositoryGitHubResponse))
-      .mockImplementationOnce(() => of<AxiosResponse<GitBranch[]>>(branchGitHubResponse));
+      .mockImplementationOnce(() => of(organizationGitHubResponse))
+      .mockImplementationOnce(() => of(repositoryGitHubResponse))
+      .mockImplementationOnce(() => of(branchGitHubResponse));
 
     return request(app.getHttpServer())
       .get('/api/v1/users/nestjs/repos')
