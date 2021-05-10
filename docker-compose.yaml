@@ -9,7 +9,6 @@ services:
       target: development
     user: node
     tty: true
-    stdin_open: true
     volumes:
       - .:/usr/src/app
     ports:

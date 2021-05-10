@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="main.ts" type="NodeJSConfigurationType" path-to-node="docker-compose://[$PROJECT_DIR$/docker-compose.yaml]:node/node" nameIsGenerated="true" node-parameters="--nolazy -r ts-node/register -r tsconfig-paths/register" path-to-js-file="src/main.ts" working-dir="$PROJECT_DIR$">
+    <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
+      <option name="runCliOptions" value="" />
+      <option name="volumeBindings">
+        <list>
+          <DockerVolumeBindingImpl>
+            <option name="containerPath" value="/usr/src/app" />
+            <option name="hostPath" value="$PROJECT_DIR$" />
+          </DockerVolumeBindingImpl>
+        </list>
+      </option>
+    </EXTENSION>
+    <method v="2" />
+  </configuration>
+</component>
