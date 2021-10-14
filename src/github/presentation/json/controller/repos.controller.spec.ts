@@ -14,9 +14,7 @@ describe('ReposController', () => {
     reposController = app.get<ReposController>(ReposController);
   });
 
-  describe('root', () => {
-    it('findAll method is defined', () => {
-      expect(reposController.findAll).toBeDefined();
-    });
+  it('findAll method is defined', () => {
+    expect(reposController.findAll).toBeDefined();
   });
 });

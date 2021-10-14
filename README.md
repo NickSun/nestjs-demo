@@ -1,10 +1,10 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
+<p>
+  <a href="https://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
 
 ## Description
 
-Github User Repositories demo application.
+GitHub User Repositories demo application.
 
 ## Installation
 
@@ -26,16 +26,16 @@ Check that [http://localhost:3000/api/](http://localhost:3000/api/) works.
 
 ```bash
 # unit tests
-$ npm run test
+$ yarn test
 
 # e2e tests
-$ npm run test:e2e
+$ yarn test:e2e
 
 # test coverage
-$ npm run test:cov
+$ yarn test:cov
 
 # e2e test coverage
-$ npm run test:e2e:cov
+$ yarn test:e2e:cov
 ```
 
 ## Deploy

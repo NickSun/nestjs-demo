@@ -1,13 +1,14 @@
 import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
-import { HttpService, INestApplication, ValidationPipe } from '@nestjs/common';
-import { of, throwError } from 'rxjs';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { HttpService } from '@nestjs/axios';
 import { AxiosError, AxiosResponse } from 'axios';
-import { GithubModule } from '../../src/github/infrastructure/github.module';
+import { of, throwError } from 'rxjs';
 import { GitUser } from '../../src/github/infrastructure/type/git-user';
 import { UserTypeEnum } from '../../src/github/infrastructure/type/user-type.enum';
 import { GitRepository } from '../../src/github/infrastructure/type/git-repository';
 import { GitBranch } from '../../src/github/infrastructure/type/git-branch';
+import { AppModule } from '../../src/app.module';
 
 describe('Get github user repositories', () => {
   let app: INestApplication;
@@ -15,7 +16,7 @@ describe('Get github user repositories', () => {
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [GithubModule],
+      imports: [AppModule],
     }).compile();
 
     httpService = moduleRef.get<HttpService>(HttpService);
@@ -59,7 +60,7 @@ describe('Get github user repositories', () => {
     jest.spyOn(httpService, 'get').mockImplementationOnce(() => throwError(err));
 
     return request(app.getHttpServer())
-      .get('/api/v1/users/usernotfound/repos')
+      .get('/api/v1/users/user-not-found/repos')
       .set('Accept', 'application/json')
       .expect(404)
       .expect(response);
@@ -106,6 +107,12 @@ describe('Get github user repositories', () => {
             sha: '8ed4230c8295bba838c2eb7fe6310166d33d3020',
           },
         },
+        {
+          name: 'develop',
+          commit: {
+            sha: 'rhbjRb9n8295bba838c2eb7fe6310166d33dy5FU',
+          },
+        },
       ],
       ...defaultResponseFields,
     };
@@ -117,6 +124,10 @@ describe('Get github user repositories', () => {
           {
             name: 'master',
             sha: '8ed4230c8295bba838c2eb7fe6310166d33d3020',
+          },
+          {
+            name: 'develop',
+            sha: 'rhbjRb9n8295bba838c2eb7fe6310166d33dy5FU',
           },
         ],
       },
@@ -135,7 +146,7 @@ describe('Get github user repositories', () => {
       .expect(response);
   });
 
-  it('check empty response for user', () => {
+  it('check empty repositories response for user', () => {
     const defaultResponseFields = {
       status: 200,
       statusText: 'OK',

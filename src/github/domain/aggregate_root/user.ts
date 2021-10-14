@@ -3,7 +3,7 @@ import { Repository } from '../entity/repository';
 export class User {
   private repos: Repository[];
 
-  public constructor(private login: string, private isOrg: boolean) {}
+  public constructor(private readonly login: string, private readonly isOrg: boolean) {}
 
   public isOrganization(): boolean {
     return this.isOrg;

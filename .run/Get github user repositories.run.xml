@@ -1,0 +1,18 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Get github user repositories" type="JavaScriptTestRunnerJest" nameIsGenerated="true">
+    <config-file value="$PROJECT_DIR$/test/jest-e2e.json" />
+    <node-interpreter value="project" />
+    <node-options value="" />
+    <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+    <working-dir value="$PROJECT_DIR$" />
+    <envs>
+      <env name="LOG_LEVEL" value="debug" />
+    </envs>
+    <scope-kind value="SUITE" />
+    <test-file value="$PROJECT_DIR$/test/github/get-user-repos.e2e-spec.ts" />
+    <test-names>
+      <test-name value="Get github user repositories" />
+    </test-names>
+    <method v="2" />
+  </configuration>
+</component>

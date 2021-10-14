@@ -1,3 +1,3 @@
 export class Branch {
-  public constructor(private name: string, private sha: string) {}
+  public constructor(private readonly name: string, private readonly sha: string) {}
 }

@@ -1,10 +1,22 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { GithubModule } from './github/infrastructure/github.module';
+import { GitHubModule } from './github/infrastructure/github.module';
+import { validate } from './config/env.validation';
+import appConfig from './config/app-config';
 
 @Module({
-  imports: [GithubModule],
+  imports: [
+    GitHubModule,
+    ConfigModule.forRoot({
+      ignoreEnvFile: true,
+      isGlobal: true,
+      validate,
+      cache: true,
+      load: [appConfig],
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

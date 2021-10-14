@@ -2,8 +2,8 @@ import { Branch } from './branch';
 
 export class Repository {
   public constructor(
-    private name: string,
-    private ownerLogin: string,
+    private readonly name: string,
+    private readonly ownerLogin: string,
     private branches: Branch[] = [],
   ) {}
 
@@ -13,5 +13,7 @@ export class Repository {
 
   public setBranches(branches: Branch[]) {
     this.branches = branches;
+
+    return this;
   }
 }

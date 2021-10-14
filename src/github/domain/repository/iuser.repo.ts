@@ -1,5 +1,6 @@
-import { User } from '../aggregate_root/user';
+import { Observable } from 'rxjs';
+import { Repository } from '../entity/repository';
 
 export abstract class IUserRepo {
-  abstract getUser(username: string): Promise<User>;
+  abstract getUserRepos(username: string): Observable<Repository[]>;
 }
