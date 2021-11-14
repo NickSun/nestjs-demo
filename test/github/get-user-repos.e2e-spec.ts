@@ -1,5 +1,5 @@
 import * as request from 'supertest';
-import { Test } from '@nestjs/testing';
+import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { AxiosError, AxiosResponse } from 'axios';
@@ -15,7 +15,7 @@ describe('Get github user repositories', () => {
   let httpService: HttpService;
 
   beforeAll(async () => {
-    const moduleRef = await Test.createTestingModule({
+    const moduleRef: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
 
@@ -135,9 +135,9 @@ describe('Get github user repositories', () => {
 
     jest
       .spyOn(httpService, 'get')
-      .mockImplementationOnce(() => of(userGitHubResponse))
-      .mockImplementationOnce(() => of(repositoryGitHubResponse))
-      .mockImplementationOnce(() => of(branchGitHubResponse));
+      .mockReturnValueOnce(of(userGitHubResponse))
+      .mockReturnValueOnce(of(repositoryGitHubResponse))
+      .mockReturnValueOnce(of(branchGitHubResponse));
 
     return request(app.getHttpServer())
       .get('/api/v1/users/john/repos')
@@ -168,8 +168,8 @@ describe('Get github user repositories', () => {
 
     jest
       .spyOn(httpService, 'get')
-      .mockImplementationOnce(() => of(userGitHubResponse))
-      .mockImplementationOnce(() => of(repositoryGitHubResponse));
+      .mockReturnValueOnce(of(userGitHubResponse))
+      .mockReturnValueOnce(of(repositoryGitHubResponse));
 
     return request(app.getHttpServer())
       .get('/api/v1/users/john/repos')
@@ -230,9 +230,9 @@ describe('Get github user repositories', () => {
 
     jest
       .spyOn(httpService, 'get')
-      .mockImplementationOnce(() => of(organizationGitHubResponse))
-      .mockImplementationOnce(() => of(repositoryGitHubResponse))
-      .mockImplementationOnce(() => of(branchGitHubResponse));
+      .mockReturnValueOnce(of(organizationGitHubResponse))
+      .mockReturnValueOnce(of(repositoryGitHubResponse))
+      .mockReturnValueOnce(of(branchGitHubResponse));
 
     return request(app.getHttpServer())
       .get('/api/v1/users/nestjs/repos')

@@ -9,7 +9,7 @@ export class WinstonLogger implements LoggerService {
 
   constructor(private appConfigService: AppConfigService) {
     this.logger = winston.createLogger({
-      level: appConfigService.logLevel,
+      level: appConfigService.getLogLevel(),
       format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
       humanReadableUnhandledException: true,
       showLevel: true,
@@ -20,7 +20,7 @@ export class WinstonLogger implements LoggerService {
       ],
     });
 
-    if (process.env.NODE_ENV === 'test') {
+    if (process.env.NODE_ENV !== 'production') {
       this.logger.add(
         new winston.transports.Console({
           format: winston.format.combine(

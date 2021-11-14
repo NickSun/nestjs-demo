@@ -6,7 +6,7 @@ export class AppConfigService {
   constructor(private configService: ConfigService) {
   }
 
-  get logLevel(): string {
+  getLogLevel(): string {
     return this.configService.get('appConfig.logLevel');
   }
 }
