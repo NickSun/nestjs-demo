@@ -1,12 +1,14 @@
 import { Observable, of, zip } from 'rxjs';
 import { Inject, Injectable, LoggerService } from '@nestjs/common';
+import { performance } from 'perf_hooks';
 import { InjectionToken } from './injection-token.enum';
-
-const { performance } = require('perf_hooks');
 
 @Injectable()
 export class Performance {
-  constructor(@Inject(InjectionToken.LOGGER) private logger: LoggerService) {}
+  constructor(
+    @Inject(InjectionToken.LOGGER)
+    private readonly logger: LoggerService,
+  ) {}
 
   measureTimeObservable(observable: Observable<any>, description: string): Observable<any> {
     return zip(of(performance.now()), observable, (startTime, observableResult) => {

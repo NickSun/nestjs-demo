@@ -27,10 +27,10 @@ export class UserRepo implements IUserRepo {
 
   private getUser(username: string): Observable<User> {
     return this.gitHubApiClient
-      .get<GitUser>(this.gitHubApiClient.endpoints.getUser(username), 'Get GitHub user info')
+      .get<GitUser>(this.gitHubApiClient.endpoints.getUser(username), 'Get user info')
       .pipe(
         catchError((err) => {
-          if (err.response && err.response.status === HttpStatus.NOT_FOUND) {
+          if (err?.response?.status === HttpStatus.NOT_FOUND) {
             throw new UserNotFoundException();
           }
 
@@ -45,7 +45,7 @@ export class UserRepo implements IUserRepo {
       ? this.gitHubApiClient.endpoints.getOrganizationReposList(user.getLogin())
       : this.gitHubApiClient.endpoints.getUserReposList(user.getLogin());
 
-    return this.gitHubApiClient.get<GitRepository[]>(path, 'Get GitHub user repositories').pipe(
+    return this.gitHubApiClient.get<GitRepository[]>(path, 'Get user repositories').pipe(
       map((repos: GitRepository[]) => repos.filter((repo: GitRepository) => !repo.fork)),
       map((repos: GitRepository[]) =>
         repos.map((repo: GitRepository) => new Repository(repo.name, repo.owner.login)),
@@ -59,7 +59,7 @@ export class UserRepo implements IUserRepo {
       repos.map((repo: Repository) => {
         const path = this.gitHubApiClient.endpoints.getBranches(user.getLogin(), repo.getName());
 
-        return this.gitHubApiClient.get<GitBranch[]>(path, 'Get GitHub repository branches').pipe(
+        return this.gitHubApiClient.get<GitBranch[]>(path, 'Get repository branches').pipe(
           map((branches: GitBranch[]) =>
             branches.map((branch: GitBranch) => new Branch(branch.name, branch.commit.sha)),
           ),

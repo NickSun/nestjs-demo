@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, LoggerService } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { AxiosResponse } from 'axios';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Performance } from '../../application/helper/performance';
+import { InjectionToken } from '../../application/helper/injection-token.enum';
 
 @Injectable()
 export class GitHubApiClient {
@@ -20,6 +21,8 @@ export class GitHubApiClient {
   };
 
   public constructor(
+    @Inject(InjectionToken.LOGGER)
+    private readonly logger: LoggerService,
     private readonly httpService: HttpService,
     private readonly performance: Performance,
   ) {}
@@ -30,7 +33,18 @@ export class GitHubApiClient {
         .get<T>(path, {
           headers: this.headers,
         })
-        .pipe(map((res: AxiosResponse<T>) => res.data)),
+        .pipe(
+          tap((res: AxiosResponse<T>) => {
+            this.logger.log(`${this.constructor.name}: ${description} - status: ${res.status}`);
+            this.logger.log(
+              `${this.constructor.name}: ${description} - headers: ${JSON.stringify(res.headers)}`,
+            );
+            this.logger.log(
+              `${this.constructor.name}: ${description} - response: ${JSON.stringify(res.data)}`,
+            );
+          }),
+          map((res: AxiosResponse<T>) => res.data),
+        ),
       description,
     );
   }

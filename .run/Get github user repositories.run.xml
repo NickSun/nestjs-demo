@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Get github user repositories" type="JavaScriptTestRunnerJest" nameIsGenerated="true">
+  <configuration default="false" name="Get github user repositories (e2e)" type="JavaScriptTestRunnerJest">
     <config-file value="$PROJECT_DIR$/test/jest-e2e.json" />
     <node-interpreter value="project" />
     <node-options value="" />

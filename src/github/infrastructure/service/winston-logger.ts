@@ -1,7 +1,6 @@
 import { Injectable, LoggerService } from '@nestjs/common';
+import * as winston from 'winston';
 import { AppConfigService } from '../../../config/app-config.service';
-
-const winston = require('winston');
 
 @Injectable()
 export class WinstonLogger implements LoggerService {
@@ -11,8 +10,6 @@ export class WinstonLogger implements LoggerService {
     this.logger = winston.createLogger({
       level: appConfigService.getLogLevel(),
       format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
-      humanReadableUnhandledException: true,
-      showLevel: true,
       handleExceptions: true,
       transports: [
         new winston.transports.File({ filename: 'error.log', level: 'error' }),
